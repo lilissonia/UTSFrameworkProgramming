@@ -11,29 +11,29 @@ class SuratController extends Controller
 {
     public function list()
     {
-        $hasil = DB::select('select * from surat');
+        $hasil = DB::select('select * from table_surat');
         return view('list-surat', ['data' => $hasil]);
     }
     public function simpan(Request $req)
     {
         DB::insert(
-            'insert into surat (nomor_surat,tanggal_surat, judul_surat) values (?, ?, ?)',
+            'insert into table_surat (nomor_surat,tanggal_surat, judul_surat) values (?, ?, ?)',
             [$req->nomor_surat, $req->tanggal_surat, $req->judul_surat]
         );
-        $hasil = DB::select('select * from surat');
+        $hasil = DB::select('select * from table_surat');
         return view('list-surat', ['data' => $hasil]);
     }
     public function hapus($req)
     {
         Log::info('proses hapus dengan id=' . $req);
-        DB::delete('delete from surat where id = ?', [$req]);
+        DB::delete('delete from table_surat where id = ?', [$req]);
 
-        $hasil = DB::select('select * from surat');
+        $hasil = DB::select('select * from table_surat');
         return view('list-surat', ['data' => $hasil]);
     }
     public function ubah($req)
     {
-        $hasil = DB::select('select * from surat where id = ?', [$req]);
+        $hasil = DB::select('select * from table_surat where id = ?', [$req]);
         return view('form-ubah', ['data' => $hasil]);
     }
     public function rubah(Request $req)
@@ -41,7 +41,7 @@ class SuratController extends Controller
         Log::info('Hallo');
         Log::info($req);
         DB::update(
-            'update surat set ' .
+            'update table_surat set ' .
                 'nomor_surat=?, ' .
                 'tanggal_surat=?, ' .
                 'judul_surat=? where id=? ',
@@ -52,7 +52,7 @@ class SuratController extends Controller
                 $req->id
             ]
         );
-        $hasil = DB::select('select * from surat');
+        $hasil = DB::select('select * from table_surat');
         return view('list-surat', ['data' => $hasil]);
     }
 }
